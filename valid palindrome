@@ -1,0 +1,28 @@
+class Solution {
+    public boolean isPalindrome(String s) {
+        int left = 0, right = s.length() - 1;
+        
+        while (left < right) {
+            // 1. Move left pointer forward if it's not a letter or number
+            while (left < right && !Character.isLetterOrDigit(s.charAt(left))) {
+                left++;
+            }
+            
+            // 2. Move right pointer backward if it's not a letter or number
+            while (left < right && !Character.isLetterOrDigit(s.charAt(right))) {
+                right--;
+            }
+            
+            // 3. Convert both to lowercase and compare them
+            if (Character.toLowerCase(s.charAt(left)) != Character.toLowerCase(s.charAt(right))) {
+                return false;
+            }
+            
+            // 4. Move inward after a successful match
+            left++;
+            right--;
+        }
+        
+        return true;
+    }
+}
