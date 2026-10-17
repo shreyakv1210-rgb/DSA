@@ -1,0 +1,34 @@
+import java.util.Map;
+import java.util.HashMap;
+import java.util.PriorityQueue;
+
+class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+        // 1. Count frequencies
+        Map<Integer, Integer> countMap = new HashMap<>();
+        for (int num : nums) {
+            countMap.put(num, countMap.getOrDefault(num, 0) + 1);
+        } // <--- This was the missing brace!
+
+        // 2. Build Min-Heap based on frequency
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>(
+            (a, b) -> countMap.get(a) - countMap.get(b)
+        );
+        
+        // 3. Keep top k elements in the heap
+        for (int num : countMap.keySet()) {
+            minHeap.add(num);
+            if (minHeap.size() > k) {
+                minHeap.poll();
+            }
+        }
+        
+        // 4. Extract results
+        int[] result = new int[k];
+        for (int i = 0; i < k; i++) {
+            result[i] = minHeap.poll(); 
+        }
+        
+        return result;
+    }
+}
